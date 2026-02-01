@@ -27,6 +27,10 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import forum
+    app.register_blueprint(forum.bp)
+    app.add_url_rule('/', endpoint='index')
+
     # a simple page that says hello
     @app.route('/hello')
     def hello():

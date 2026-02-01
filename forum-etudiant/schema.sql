@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS thread;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS forum;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,9 +12,11 @@ CREATE TABLE user (
 CREATE TABLE thread (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
+  forum_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
+  FOREIGN KEY (forum_id) REFERENCES forum (id)
 );
 
 CREATE TABLE post (
@@ -23,3 +27,11 @@ CREATE TABLE post (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+CREATE TABLE forum (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+);
+
+-- creating default forums
+INSERT INTO forum (name) VALUES ("Forum de test");

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Forums :{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for forum in forums %}
+    <div class="forum">
+      <a href="/forum/{{ forum['id'] }}/">
+        <h2>{{ forum['name'] }}</h2>
+      </a>
+    </div>
+
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+
+  {% endfor %}
+
+{% endblock %}
