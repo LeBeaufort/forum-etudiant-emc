@@ -66,3 +66,23 @@ def create(forum_id):
     forum_name = db.execute("SELECT name FROM forum WHERE id = ?", forum_id).fetchone()["name"]
 
     return render_template('forum/create.html', name=forum_name)
+
+@bp.route("/forum/thread/<thread_id>/")
+def thread_view(thread_id):
+    db = get_db()
+    posts = db.execute(
+        'SELECT p.id, created, author_id, username'
+        ' FROM post p JOIN user u ON p.author_id = u.id'
+        ' WHERE thread_id = ?'
+        ' ORDER BY created DESC',
+        thread_id
+    ).fetchall()
+
+    thread = db.execute("SELECT forum_id, title FROM thread WHERE id=?", thread_id).fetchone()
+
+    forum_name = db.execute("SELECT name FROM forum WHERE id = ?", str(thread["forum_id"])).fetchone()["name"]
+
+    return render_template("forum/thread_view.html",
+                           forum_name=forum_name,
+                           thread_title=thread["title"]
+                           )
