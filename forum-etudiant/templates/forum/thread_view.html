@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %} {{ forum_name }} > {{ thread_title}} {% endblock %}</h1>
-  <!--
+  <h1>{% block title %} {{ forum_name }} > {{ thread['title']}} {% endblock %}</h1>
+
+  <a class="action" href="{{ url_for('forum.forum', forum_id=thread['forum_id']) }}">Back</a>
   {% if g.user %}
-    <a class="action" href="{{ url_for('forum.create', forum_id=1) }}">New</a>
+    <a class="action" href="{{ url_for('forum.reply', thread_id=thread_id) }}">New</a>
+    <!-- url_for('forum.reply', thread_id=) -->
   {% endif %}
-  -->
+
 {% endblock %}
 
 {% block content %}

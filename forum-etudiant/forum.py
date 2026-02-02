@@ -67,6 +67,7 @@ def create(forum_id):
 
     return render_template('forum/create.html', name=forum_name)
 
+
 @bp.route("/forum/thread/<thread_id>/")
 def thread_view(thread_id):
     db = get_db()
@@ -74,7 +75,7 @@ def thread_view(thread_id):
         'SELECT p.id, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE thread_id = ?'
-        ' ORDER BY created DESC',
+        ' ORDER BY created ASC',
         thread_id
     ).fetchall()
 
@@ -83,7 +84,32 @@ def thread_view(thread_id):
     forum_name = db.execute("SELECT name FROM forum WHERE id = ?", str(thread["forum_id"])).fetchone()["name"]
 
     return render_template("forum/thread_view.html",
+                           thread_id=thread_id,
                            forum_name=forum_name,
-                           thread_title=thread["title"],
+                           thread=thread,
                            posts=posts
                            )
+
+@bp.route('/forum/thread/<thread_id>/create/', methods=('GET', 'POST'))
+@login_required
+def reply(thread_id):
+    db = get_db()
+    if request.method == 'POST':
+        body = request.form['body']
+        error = None
+
+        if not body:
+            error = 'body is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db.execute("INSERT INTO post (body, author_id, thread_id) VALUES (?, ?, ?)",
+                       (body, g.user['id'], thread_id)
+            )
+
+            db.commit()
+
+            return redirect(url_for('forum.thread_view', thread_id=thread_id))
+
+    return render_template('forum/reply.html')
