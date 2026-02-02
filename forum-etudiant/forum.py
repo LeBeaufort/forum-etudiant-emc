@@ -47,21 +47,21 @@ def create(forum_id):
         if error is not None:
             flash(error)
         else:
-            c = db.execute(
+            thread_id = db.execute(
                 'INSERT INTO thread (title, author_id, forum_id)'
                 ' VALUES (?, ?, ?)',
                 (title, g.user['id'], forum_id)
-            )
+            ).lastrowid
 
             db.execute("INSERT INTO post (body, author_id, thread_id) VALUES (?, ?, ?)",
-                       (body, g.user['id'], c.lastrowid)
+                       (body, g.user['id'], thread_id)
             )
 
             db.commit()
 
 
             # TODO : redirect dans le thread
-            return redirect(url_for('forum.index'))
+            return redirect(url_for('forum.thread_view', thread_id=thread_id))
 
     forum_name = db.execute("SELECT name FROM forum WHERE id = ?", forum_id).fetchone()["name"]
 
@@ -71,7 +71,7 @@ def create(forum_id):
 def thread_view(thread_id):
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, created, author_id, username'
+        'SELECT p.id, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE thread_id = ?'
         ' ORDER BY created DESC',
@@ -84,5 +84,6 @@ def thread_view(thread_id):
 
     return render_template("forum/thread_view.html",
                            forum_name=forum_name,
-                           thread_title=thread["title"]
+                           thread_title=thread["title"],
+                           posts=posts
                            )
