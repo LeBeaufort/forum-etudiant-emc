@@ -185,3 +185,12 @@ nav h1 {
   background: #5b21b6;
   transform: scale(1.02);
 }
+
+body.register-page {
+  background-image: url("../static/img/Fond_violet.jpg");
+}
+
+
+body.login-page {
+  background-image: url("../static/img/Fond_violet.jpg");
+}

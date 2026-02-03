@@ -2,6 +2,7 @@
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+<body class="{% block body_class %}{% endblock %}">
 <nav>
   <div class="nav-left">
     <img src="{{ url_for('static', filename='img/logo_AIDE_Blan.png') }}" alt="Logo" class="logo">
@@ -30,3 +31,4 @@
 
   {% block content %}{% endblock %}
 </section>
+</body>
