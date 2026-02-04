@@ -34,4 +34,7 @@ CREATE TABLE forum (
 );
 
 -- creating default forums
+INSERT INTO forum (name) VALUES ("Forum collègien");
+INSERT INTO forum (name) VALUES ("Forum lycéen");
+INSERT INTO forum (name) VALUES ("Forum étude sup");
 INSERT INTO forum (name) VALUES ("Forum de test");
