@@ -159,7 +159,7 @@ input[type=submit] {
 nav h1 {
   margin: 0;
   font-size: 1.8rem;
-  color: #5a2ca0;
+  color: #8F00FF;
   font-family: serif;
 }
 
@@ -174,7 +174,7 @@ nav h1 {
 .nav-buttons a {
   text-decoration: none;
   color: white;
-  background: #6d28d9;
+  background: #8F00FF;
   padding: 0.6rem 1.4rem;
   border-radius: 6px;
   font-weight: 500;
@@ -182,7 +182,7 @@ nav h1 {
 }
 
 .nav-buttons a:hover {
-  background: #5b21b6;
+  background: #8F00FF;
   transform: scale(1.02);
 }
 
