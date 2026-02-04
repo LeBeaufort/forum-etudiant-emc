@@ -1,12 +1,14 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} AIDE - Association Interscolaire de Discussion entre Etudiants </title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="icon" type="image/png" href="../static/img/AIDE.png">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='/img/AIDE.png' ) }}">
 
 <body class="{% block body_class %}{% endblock %}">
 <nav>
   <div class="nav-left">
-    <img src="{{ url_for('static', filename='/img/Logo_AIDE_Blan.png') }}" alt="Logo" class="logo">
+    <a href="{{ url_for('index') }} ">
+      <img src="{{ url_for('static', filename='/img/Logo_AIDE_Blan.png') }}" alt="Logo" class="logo">
+    </a>
     <h1>A.I.D.E.</h1>
   </div>
 
